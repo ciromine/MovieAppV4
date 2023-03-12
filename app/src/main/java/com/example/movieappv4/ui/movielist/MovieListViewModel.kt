@@ -17,7 +17,6 @@ class MovieListViewModel @Inject constructor(
     private val useCase: GetMovieListUseCase
 ) : ViewModel(), LifecycleObserver {
 
-    var loading: MutableLiveData<Boolean> = MutableLiveData()
     private var _movieListMutable = MutableLiveData<List<DomainMovie>>()
     val movieList: LiveData<List<DomainMovie>> = _movieListMutable
 
