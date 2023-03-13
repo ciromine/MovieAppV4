@@ -28,7 +28,7 @@ class MovieListViewModel @Inject constructor(
         useCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _movieListMutable = MutableLiveData(result.data?.results)
+                    _movieListMutable.value = result.data?.results
                 }
                 is Resource.Error -> {
                     result.message ?: "An unexpected error occurred"

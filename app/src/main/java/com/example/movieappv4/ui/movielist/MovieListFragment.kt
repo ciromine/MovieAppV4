@@ -93,6 +93,9 @@ class MovieListFragment : Fragment() {
     }
 
     private fun onItemCharacterTapped(domainMovie: DomainMovie) {
+        binding?.let {
+            navigator.goToMovieDetail(it.root, domainMovie)
+        }
     }
 
     private fun goToCharacterEdit(domainMovie: DomainMovie) {
