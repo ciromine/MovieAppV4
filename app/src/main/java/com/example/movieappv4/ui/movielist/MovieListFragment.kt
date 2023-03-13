@@ -79,26 +79,27 @@ class MovieListFragment : Fragment() {
 
     private fun showMovieList() {
         viewModel.movieList.observe(this, Observer { response ->
-            response?.let { movieList ->
-                hideLoading()
-                val adapter = MovieListAdapter(movieList) {
-                    onItemCharacterTapped(it)
-                }
-                binding?.apply {
-                    mainRecycler.adapter = adapter
-                    mainRecycler.show()
+            response?.let { movieListResult ->
+                if (!movieListResult.error) {
+                    hideLoading()
+                    movieListResult.results?.let{ result ->
+                        val adapter = MovieListAdapter(result) {
+                            onItemCharacterTapped(it)
+                        }
+                        binding?.apply {
+                            mainRecycler.adapter = adapter
+                            mainRecycler.show()
+                        }
+                    }
+                } else {
+                    hideLoading()
+                    showError()
                 }
             }
         })
     }
 
     private fun onItemCharacterTapped(domainMovie: DomainMovie) {
-        binding?.let {
-            navigator.goToMovieDetail(it.root, domainMovie)
-        }
-    }
-
-    private fun goToCharacterEdit(domainMovie: DomainMovie) {
         binding?.let {
             navigator.goToMovieDetail(it.root, domainMovie)
         }

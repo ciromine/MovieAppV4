@@ -15,13 +15,13 @@ class GetMovieListUseCase
 constructor(private val repository: MovieRepository) {
     operator fun invoke(): Flow<Resource<DomainMovieList>> = flow {
         try {
-            emit(Resource.Loading<DomainMovieList>())
+            emit(Resource.Loading())
             val movieList = repository.getMovieList().first()
-            emit(Resource.Success<DomainMovieList>(movieList))
-        } catch(e: HttpException) {
-            emit(Resource.Error<DomainMovieList>(e.localizedMessage ?: "An unexpected error occured"))
-        } catch(e: IOException) {
-            emit(Resource.Error<DomainMovieList>("Couldn't reach server. Check your internet connection."))
+            emit(Resource.Success(movieList))
+        } catch (e: HttpException) {
+            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occured"))
+        } catch (e: IOException) {
+            emit(Resource.Error("Couldn't reach server. Check your internet connection."))
         }
     }
 }
