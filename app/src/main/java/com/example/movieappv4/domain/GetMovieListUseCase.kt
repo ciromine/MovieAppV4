@@ -15,7 +15,6 @@ class GetMovieListUseCase
 constructor(private val repository: MovieRepository) {
     operator fun invoke(): Flow<Resource<DomainMovieList>> = flow {
         try {
-            emit(Resource.Loading())
             val movieList = repository.getMovieList().first()
             emit(Resource.Success(movieList))
         } catch (e: HttpException) {
